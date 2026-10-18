@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dream Food – Menu</title>
+<meta name="description" content="Dream Food – Bistro · Bar · Kitchen. Menuja e mëngjesit dhe e darkës.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400;1,500&family=Jost:wght@300;400;500&family=Pinyon+Script&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f7f1e5; --ink:#0f3320; --text:#2b2b2b; --muted:#6f6a60; --gold:#a87b4f; --line:#c9a77f; --card:#fbf7ee;
+  --shadow:0 10px 30px rgba(15,51,32,.10);
+}
+body.dinner{
+  --bg:#0c1712; --ink:#f3e6cf; --text:#efe4d0; --muted:#b9ab92; --gold:#e0b985; --line:#5a4a33; --card:#13221b;
+  --shadow:0 10px 30px rgba(0,0,0,.45);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Jost',system-ui,sans-serif; font-weight:300; background:var(--bg); color:var(--text);
+  min-height:100vh; transition:background .5s,color .5s; -webkit-font-smoothing:antialiased;
+}
+.frame{max-width:860px;margin:0 auto;padding:28px 20px 48px;}
+.sheet{border:1px solid var(--gold);padding:34px 22px 28px;position:relative;}
+body.dinner .sheet{border-color:var(--line);}
+
+.langs{display:flex;justify-content:center;gap:6px;margin-bottom:26px;flex-wrap:wrap}
+.langs button{
+  font:500 12px 'Jost',sans-serif;letter-spacing:.14em;padding:7px 12px;border:1px solid var(--line);
+  background:transparent;color:var(--gold);border-radius:999px;cursor:pointer;transition:.2s;
+}
+.langs button:hover{border-color:var(--gold)}
+.langs button.active{background:var(--gold);color:var(--bg);border-color:var(--gold)}
+.brand{text-align:center;margin-bottom:34px}
+.brand h1{font-family:'Cormorant Garamond',serif;font-weight:700;color:var(--ink);letter-spacing:.06em;line-height:1}
+.brunch .brand h1{font-size:clamp(44px,10vw,76px)}
+.brand .sub{display:flex;align-items:center;justify-content:center;gap:16px;margin-top:14px;color:var(--gold);
+  font-weight:400;letter-spacing:.42em;font-size:clamp(12px,2.6vw,16px);text-transform:uppercase}
+.brand .sub::before,.brand .sub::after{content:"";height:1px;width:clamp(30px,10vw,90px);background:var(--gold)}
+.dinner .brand .mono{font-family:'Cormorant Garamond',serif;font-size:44px;color:var(--ink);letter-spacing:.08em}
+.dinner .brand .mono small{display:block;font-size:13px;letter-spacing:.38em;font-weight:500;margin-top:2px}
+.dinner .brand .tag{font:400 11px 'Jost';letter-spacing:.32em;color:var(--gold);margin-top:8px;text-transform:uppercase}
+.dinner .brand .script{font-family:'Pinyon Script',cursive;font-size:clamp(54px,13vw,88px);color:var(--gold);line-height:1;margin-top:18px}
+.dinner .brand .script span{display:block;font-family:'Cormorant Garamond',serif;font-weight:700;font-size:.52em;color:var(--ink);letter-spacing:.04em;margin-top:-4px}
+.hours{margin-top:14px;font-size:12px;letter-spacing:.2em;color:var(--muted);text-transform:uppercase}
+
+.item{
+  display:grid;grid-template-columns:1fr auto;gap:8px 18px;padding:24px 0;border-top:1px solid var(--line);
+  align-items:start;
+}
+.item:first-of-type{border-top:0}
+.info h2{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:clamp(25px,5.2vw,34px);color:var(--ink);line-height:1.1}
+.info p{margin-top:8px;font-size:clamp(14.5px,3.4vw,16.5px);line-height:1.55;color:var(--text);max-width:46ch}
+.price{
+  font-family:'Cormorant Garamond',serif;font-weight:700;font-size:clamp(22px,4.6vw,30px);color:var(--gold);white-space:nowrap;
+  grid-column:1;grid-row:2;margin-top:2px
+}
+.thumb{
+  grid-column:2;grid-row:1 / span 2;width:clamp(96px,26vw,150px);aspect-ratio:1;border-radius:14px;overflow:hidden;cursor:zoom-in;
+  background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow);position:relative;padding:0;
+  transition:transform .25s ease, border-color .25s;
+}
+.thumb:hover{transform:translateY(-2px) scale(1.02);border-color:var(--gold)}
+.thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.thumb .ph{position:absolute;inset:0;display:none;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;
+  font-size:34px;color:var(--gold);letter-spacing:.08em}
+.thumb.noimg img{display:none}.thumb.noimg .ph{display:flex}
+.thumb::after{content:"⤢";position:absolute;right:7px;bottom:6px;font-size:13px;color:#fff;background:rgba(0,0,0,.45);
+  width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+
+.footer{text-align:center;margin-top:26px;padding-top:6px;color:var(--gold);font-size:11px;letter-spacing:.34em;text-transform:uppercase;font-weight:400}
+.dinner .footer{font-family:'Pinyon Script',cursive;text-transform:none;letter-spacing:.04em;font-size:30px}
+
+.closed{text-align:center;padding:60px 10px 50px}
+.closed h2{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,7vw,48px);color:var(--ink);font-weight:700}
+.closed p{margin-top:14px;font-size:16px;line-height:1.6;color:var(--muted)}
+.closed .times{margin-top:26px;display:inline-block;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:14px 26px;
+  color:var(--gold);letter-spacing:.18em;font-size:13px;text-transform:uppercase;line-height:2}
+
+.modal{position:fixed;inset:0;background:rgba(5,10,8,.82);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;
+  padding:18px;z-index:50;opacity:0;transition:opacity .25s}
+.modal.open{display:flex;opacity:1}
+.dialog{
+  background:var(--card);color:var(--text);border:1px solid var(--gold);border-radius:18px;max-width:560px;width:100%;max-height:92vh;overflow:auto;
+  box-shadow:0 30px 80px rgba(0,0,0,.5);animation:pop .28s ease;position:relative
+}
+@keyframes pop{from{transform:translateY(14px) scale(.97);opacity:0}to{transform:none;opacity:1}}
+.dialog .big{width:100%;aspect-ratio:4/3;background:var(--bg);display:flex;align-items:center;justify-content:center;position:relative}
+.dialog .big img{width:100%;height:100%;object-fit:cover;display:block}
+.dialog .big .ph{font-family:'Cormorant Garamond',serif;font-size:64px;color:var(--gold)}
+.dialog .body{padding:22px 24px 26px}
+.dialog h3{font-family:'Cormorant Garamond',serif;font-size:32px;color:var(--ink);font-weight:700;line-height:1.1}
+.dialog p{margin-top:10px;font-size:16px;line-height:1.6}
+.dialog .mprice{margin-top:14px;font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:700;color:var(--gold)}
+.close{position:absolute;top:10px;right:10px;width:38px;height:38px;border-radius:50%;border:0;background:rgba(0,0,0,.55);color:#fff;font-size:22px;
+  cursor:pointer;z-index:2;line-height:1}
+.close:hover{background:rgba(0,0,0,.8)}
+@media (max-width:520px){.sheet{padding:26px 16px 22px}.frame{padding:14px 10px 30px}}
+</style>
+</head>
+<body class="brunch">
+<div class="frame">
+  <div class="sheet">
+    <nav class="langs" id="langs" aria-label="Language"></nav>
+    <header class="brand" id="brand"></header>
+    <main id="menu"></main>
+    <div class="footer" id="footer"></div>
+  </div>
+</div>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-hidden="true">
+  <div class="dialog" id="dialog"></div>
+</div>
+
+<script>
+const IMG_BASE = "https://cdn.example.com/dream-food/";
+const TIMEZONE = "Europe/Tirane";
+const BRUNCH_FROM = "07:00", DINNER_FROM = "16:00", CLOSE_AT = "23:00";
+const CURRENCY = "L";
+const MENUS = {
+  brunch: [
+    { img:"brunch-1.jpg", price:500,
+      sq:{n:"Mëngjes Tradicional", d:"2 vezë të skuqura, salsiçe viçi, domate, kastravec, djathë feta dhe reçel."},
+      en:{n:"Traditional Breakfast", d:"2 fried eggs, beef sausage, tomato, cucumber, feta cheese and jam."},
+      it:{n:"Colazione Tradizionale", d:"2 uova fritte, salsiccia di manzo, pomodoro, cetriolo, feta e marmellata."},
+      fr:{n:"Petit-déjeuner traditionnel", d:"2 œufs au plat, saucisse de bœuf, tomate, concombre, feta et confiture."},
+      de:{n:"Traditionelles Frühstück", d:"2 Spiegeleier, Rindswurst, Tomate, Gurke, Feta und Marmelade."} },
+    { img:"brunch-2.jpg", price:550,
+      sq:{n:"Omletë Vegjetariane", d:"Omletë me perime të stinës dhe mozzarella. Shoqërohet me domate, kastravec, djathë feta dhe ullinj."},
+      en:{n:"Vegetarian Omelette", d:"Omelette with seasonal vegetables and mozzarella, served with tomato, cucumber, feta cheese and olives."},
+      it:{n:"Omelette Vegetariana", d:"Omelette con verdure di stagione e mozzarella, servita con pomodoro, cetriolo, feta e olive."},
+      fr:{n:"Omelette végétarienne", d:"Omelette aux légumes de saison et mozzarella, servie avec tomate, concombre, feta et olives."},
+      de:{n:"Vegetarisches Omelett", d:"Omelett mit Saisongemüse und Mozzarella, serviert mit Tomate, Gurke, Feta und Oliven."} },
+    { img:"brunch-3.jpg", price:350,
+      sq:{n:"Toast me Avokado", d:"Bukë integrale e mbushur me proshutë gjeli, domate, avokado, mozzarella, vezë të skuqur, sallatë dhe salcë Caesar."},
+      en:{n:"Avocado Toast", d:"Wholegrain toast filled with turkey ham, tomato, avocado, mozzarella, fried egg, lettuce and Caesar dressing."},
+      it:{n:"Toast all'Avocado", d:"Pane integrale farcito con prosciutto di tacchino, pomodoro, avocado, mozzarella, uovo fritto, lattuga e salsa Caesar."},
+      fr:{n:"Toast à l'Avocat", d:"Pain complet garni de jambon de dinde, tomate, avocat, mozzarella, œuf au plat, laitue et sauce César."},
+      de:{n:"Avocado-Toast", d:"Vollkorntoast gefüllt mit Putenschinken, Tomate, Avocado, Mozzarella, Spiegelei, Salat und Caesar-Dressing."} },
+    { img:"brunch-4.jpg", price:350,
+      sq:{n:"Piadina me Omletë dhe Spinaq", d:"Vezë, omletë, spinaq i tiganuar, domate, djathë feta dhe salcë hudhre."},
+      en:{n:"Spinach Omelette Piadina", d:"Egg, omelette, sautéed spinach, tomato, feta cheese and garlic sauce."},
+      it:{n:"Piadina con Omelette e Spinaci", d:"Uova, omelette, spinaci saltati, pomodoro, feta e salsa all'aglio."},
+      fr:{n:"Piadina Omelette et Épinards", d:"Œufs, omelette, épinards sautés, tomate, feta et sauce à l'ail."},
+      de:{n:"Piadina mit Omelett und Spinat", d:"Eier, Omelett, gebratener Spinat, Tomate, Feta und Knoblauchsauce."} }
+  ],
+  dinner: [
+    { img:"dinner-1.jpg", price:550,
+      sq:{n:"Chicken Burger", d:"Sallatë, domate, fileto pule e marinuar, djathë i shkrirë, salcë shtëpie."},
+      en:{n:"Chicken Burger", d:"Lettuce, tomato, marinated chicken fillet, melted cheese, homemade sauce."},
+      it:{n:"Chicken Burger", d:"Lattuga, pomodoro, filetto di pollo marinato, formaggio fuso, salsa della casa."},
+      fr:{n:"Chicken Burger", d:"Laitue, tomate, filet de poulet mariné, fromage fondu, sauce maison."},
+      de:{n:"Chicken Burger", d:"Salat, Tomate, marinierte Hähnchenbrust, geschmolzener Käse, Haussauce."} },
+    { img:"dinner-2.jpg", price:550,
+      sq:{n:"Meat Ball Burger", d:"Sallatë, domate, qofte me mish viçi, djathë i shkrirë, kastravec turshi."},
+      en:{n:"Meat Ball Burger", d:"Lettuce, tomato, beef meatballs, melted cheese, pickles."},
+      it:{n:"Meat Ball Burger", d:"Lattuga, pomodoro, polpette di manzo, formaggio fuso, cetriolini sottaceto."},
+      fr:{n:"Meat Ball Burger", d:"Laitue, tomate, boulettes de bœuf, fromage fondu, cornichons."},
+      de:{n:"Meat Ball Burger", d:"Salat, Tomate, Rinderfrikadellen, geschmolzener Käse, Gewürzgurken."} },
+    { img:"dinner-3.jpg", price:650,
+      sq:{n:"Souvlaki Pita Combo", d:"Dy shish pule të pjekura në zgarë, pita sufllaqeje e prerë në 4 pjesë, patate të skuqura dhe salcë tradicionale xaxiqi."},
+      en:{n:"Souvlaki Pita Combo", d:"Two grilled chicken skewers, pita bread cut into 4 pieces, French fries and traditional tzatziki sauce."},
+      it:{n:"Souvlaki Pita Combo", d:"Due spiedini di pollo alla griglia, pita tagliata in 4 pezzi, patatine fritte e salsa tzatziki tradizionale."},
+      fr:{n:"Souvlaki Pita Combo", d:"Deux brochettes de poulet grillées, pita coupée en 4 morceaux, frites et sauce tzatziki traditionnelle."},
+      de:{n:"Souvlaki Pita Combo", d:"Zwei gegrillte Hähnchenspieße, in 4 Stücke geschnittenes Pita, Pommes frites und traditionelle Tzatziki-Sauce."} },
+    { img:"dinner-4.jpg", price:500,
+      sq:{n:"Sallatë Cezar", d:"Sallatë jeshile, fileto pule e zgarë, salcë Cezar, misër, bukë e thekur, grana."},
+      en:{n:"Caesar Salad", d:"Lettuce, grilled chicken fillet, Caesar sauce, croutons, bread, parmesan."},
+      it:{n:"Insalata Caesar", d:"Lattuga, filetto di pollo alla griglia, salsa Caesar, mais, crostini, grana."},
+      fr:{n:"Salade César", d:"Laitue, filet de poulet grillé, sauce César, maïs, croûtons, grana."},
+      de:{n:"Caesar-Salat", d:"Grüner Salat, gegrilltes Hähnchenfilet, Caesar-Sauce, Mais, Croutons, Grana."} },
+    { img:"dinner-5.jpg", price:500,
+      sq:{n:"Sallatë Greke", d:"Domate, kastravec, qepë e kuqe, spec, ullinj, djathë feta, rigon."},
+      en:{n:"Greek Salad", d:"Tomato, cucumber, red onion, pepper, olives, feta cheese, oregano."},
+      it:{n:"Insalata Greca", d:"Pomodoro, cetriolo, cipolla rossa, peperone, olive, feta, origano."},
+      fr:{n:"Salade Grecque", d:"Tomate, concombre, oignon rouge, poivron, olives, feta, origan."},
+      de:{n:"Griechischer Salat", d:"Tomate, Gurke, rote Zwiebel, Paprika, Oliven, Feta, Oregano."} }
+  ]
+};
+
+const UI = {
+  sq:{brunchSub:"Brunch Stories", dinnerTitle:"Menuja e Darkës", brunchHours:"Çdo ditë · 07:00 – 16:00", dinnerHours:"Çdo ditë · 16:00 – 23:00",
+      closedTitle:"Aktualisht jemi të mbyllur", closedText:"Ju presim nesër me ushqim të freskët dhe humor të mirë.",
+      times:"Mëngjes &amp; Brunch 07:00 – 16:00<br>Darkë 16:00 – 23:00", closeBtn:"Mbyll", tag:"Bistro · Bar · Kitchen",
+      footerBrunch:"Fresh Food · Good Mood · Dream Food", footerDinner:"Dream Food"},
+  en:{brunchSub:"Brunch Stories", dinnerTitle:"Dinner Menu", brunchHours:"Daily · 07:00 – 16:00", dinnerHours:"Daily · 16:00 – 23:00",
+      closedTitle:"We are currently closed", closedText:"See you tomorrow for fresh food and good mood.",
+      times:"Breakfast &amp; Brunch 07:00 – 16:00<br>Dinner 16:00 – 23:00", closeBtn:"Close", tag:"Bistro · Bar · Kitchen",
+      footerBrunch:"Fresh Food · Good Mood · Dream Food", footerDinner:"Dream Food"},
+  it:{brunchSub:"Brunch Stories", dinnerTitle:"Menù della Cena", brunchHours:"Ogni giorno · 07:00 – 16:00", dinnerHours:"Ogni giorno · 16:00 – 23:00",
+      closedTitle:"Siamo attualmente chiusi", closedText:"Vi aspettiamo domani con cibo fresco e buon umore.",
+      times:"Colazione &amp; Brunch 07:00 – 16:00<br>Cena 16:00 – 23:00", closeBtn:"Chiudi", tag:"Bistro · Bar · Kitchen",
+      footerBrunch:"Fresh Food · Good Mood · Dream Food", footerDinner:"Dream Food"},
+  fr:{brunchSub:"Brunch Stories", dinnerTitle:"Menu du Dîner", brunchHours:"Tous les jours · 07:00 – 16:00", dinnerHours:"Tous les jours · 16:00 – 23:00",
+      closedTitle:"Nous sommes actuellement fermés", closedText:"À demain pour une cuisine fraîche et la bonne humeur.",
+      times:"Petit-déjeuner &amp; Brunch 07:00 – 16:00<br>Dîner 16:00 – 23:00", closeBtn:"Fermer", tag:"Bistro · Bar · Kitchen",
+      footerBrunch:"Fresh Food · Good Mood · Dream Food", footerDinner:"Dream Food"},
+  de:{brunchSub:"Brunch Stories", dinnerTitle:"Abendkarte", brunchHours:"Täglich · 07:00 – 16:00", dinnerHours:"Täglich · 16:00 – 23:00",
+      closedTitle:"Derzeit geschlossen", closedText:"Bis morgen – mit frischem Essen und guter Laune.",
+      times:"Frühstück &amp; Brunch 07:00 – 16:00<br>Abendessen 16:00 – 23:00", closeBtn:"Schließen", tag:"Bistro · Bar · Kitchen",
+      footerBrunch:"Fresh Food · Good Mood · Dream Food", footerDinner:"Dream Food"}
+};
+const LANGS = [["sq","SQ"],["en","EN"],["it","IT"],["fr","FR"],["de","DE"]];
+
+const $ = id => document.getElementById(id);
+const toMin = s => { const [h,m] = s.split(":").map(Number); return h*60+m; };
+let lang = "sq";
+try { const s = localStorage.getItem("df_lang"); if (s && UI[s]) lang = s; } catch(e){}
+let current = null;
+
+function nowMinutes(){
+  const p = new Intl.DateTimeFormat("en-GB",{timeZone:TIMEZONE,hour:"2-digit",minute:"2-digit",hour12:false}).formatToParts(new Date());
+  const h = +p.find(x=>x.type==="hour").value % 24, m = +p.find(x=>x.type==="minute").value;
+  return h*60+m;
+}
+function activeMenu(){
+  const pv = new URLSearchParams(location.search).get("preview");
+  if (["brunch","dinner","closed"].includes(pv)) return pv;
+  const t = nowMinutes();
+  if (t >= toMin(BRUNCH_FROM) && t < toMin(DINNER_FROM)) return "brunch";
+  if (t >= toMin(DINNER_FROM) && t < toMin(CLOSE_AT)) return "dinner";
+  return "closed";
+}
+function imgUrl(f){ return IMG_BASE + f; }
+function esc(s){ return String(s).replace(/[&<>"]/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+
+function renderLangs(){
+  $("langs").innerHTML = LANGS.map(([c,l]) =>
+    `<button type="button" data-l="${c}" class="${c===lang?"active":""}" aria-label="${l}">${l}</button>`).join("");
+}
+function renderBrand(kind){
+  const u = UI[lang];
+  if (kind === "brunch"){
+    $("brand").innerHTML = `<h1>DREAM FOOD</h1><div class="sub">${esc(u.brunchSub)}</div><div class="hours">${esc(u.brunchHours)}</div>`;
+  } else if (kind === "dinner"){
+    $("brand").innerHTML = `<div class="mono">DF<small>DREAM FOOD</small></div><div class="tag">${esc(u.tag)}</div>
+      <div class="script">${esc(u.dinnerTitle)}</div><div class="hours">${esc(u.dinnerHours)}</div>`;
+  } else {
+    $("brand").innerHTML = `<h1 style="font-size:clamp(44px,10vw,76px)">DREAM FOOD</h1><div class="sub">${esc(u.tag)}</div>`;
+  }
+}
+function renderMenu(){
+  const kind = activeMenu(); current = kind;
+  document.body.className = kind === "dinner" ? "dinner" : "brunch";
+  document.documentElement.lang = lang;
+  renderBrand(kind);
+  const u = UI[lang];
+  if (kind === "closed"){
+    $("menu").innerHTML = `<div class="closed"><h2>${esc(u.closedTitle)}</h2><p>${esc(u.closedText)}</p><div class="times">${u.times}</div></div>`;
+    $("footer").textContent = "";
+    return;
+  }
+  $("menu").innerHTML = MENUS[kind].map((it,i) => {
+    const t = it[lang] || it.sq;
+    return `<article class="item">
+      <div class="info"><h2>${esc(t.n)}</h2><p>${esc(t.d)}</p></div>
+      <div class="price">${it.price} ${CURRENCY}</div>
+      <button class="thumb" type="button" data-i="${i}" aria-label="${esc(t.n)}">
+        <img src="${esc(imgUrl(it.img))}" alt="${esc(t.n)}" loading="lazy" decoding="async" width="150" height="150">
+        <span class="ph">DF</span>
+      </button>
+    </article>`;
+  }).join("");
+  $("footer").textContent = kind === "dinner" ? u.footerDinner : u.footerBrunch;
+  document.querySelectorAll(".thumb img").forEach(img => {
+    const fail = () => img.parentElement.classList.add("noimg");
+    img.addEventListener("error", fail);
+    if (img.complete && img.naturalWidth === 0) fail();
+  });
+}
+
+function openModal(i){
+  const it = MENUS[current][i], t = it[lang] || it.sq, u = UI[lang];
+  $("dialog").innerHTML = `
+    <button class="close" type="button" aria-label="${esc(u.closeBtn)}">×</button>
+    <div class="big"><img src="${esc(imgUrl(it.img))}" alt="${esc(t.n)}" decoding="async"><span class="ph" style="display:none">DF</span></div>
+    <div class="body"><h3>${esc(t.n)}</h3><p>${esc(t.d)}</p><div class="mprice">${it.price} ${CURRENCY}</div></div>`;
+  const img = $("dialog").querySelector(".big img");
+  img.addEventListener("error", () => { img.style.display="none"; $("dialog").querySelector(".big .ph").style.display="block"; });
+  $("modal").classList.add("open"); $("modal").setAttribute("aria-hidden","false");
+  document.body.style.overflow = "hidden";
+}
+function closeModal(){
+  $("modal").classList.remove("open"); $("modal").setAttribute("aria-hidden","true");
+  document.body.style.overflow = "";
+}
+
+document.addEventListener("click", e => {
+  const lb = e.target.closest("#langs button");
+  if (lb){ lang = lb.dataset.l; try{localStorage.setItem("df_lang",lang);}catch(_){}
+    renderLangs(); renderMenu(); return; }
+  const th = e.target.closest(".thumb");
+  if (th){ openModal(+th.dataset.i); return; }
+  if (e.target.closest(".close") || e.target === $("modal")) closeModal();
+});
+document.addEventListener("keydown", e => { if (e.key === "Escape") closeModal(); });
+
+setInterval(() => { if (activeMenu() !== current && !$("modal").classList.contains("open")) renderMenu(); }, 30000);
+
+renderLangs(); renderMenu();
+</script>
+</body>
+</html>
