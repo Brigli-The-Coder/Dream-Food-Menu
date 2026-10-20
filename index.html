@@ -27,6 +27,7 @@ body{
 .sheet{border:1px solid var(--gold);padding:34px 22px 28px;position:relative;}
 body.dinner .sheet{border-color:var(--line);}
 
+/* Language bar */
 .langs{display:flex;justify-content:center;gap:6px;margin-bottom:26px;flex-wrap:wrap}
 .langs button{
   font:500 12px 'Jost',sans-serif;letter-spacing:.14em;padding:7px 12px;border:1px solid var(--line);
@@ -34,6 +35,8 @@ body.dinner .sheet{border-color:var(--line);}
 }
 .langs button:hover{border-color:var(--gold)}
 .langs button.active{background:var(--gold);color:var(--bg);border-color:var(--gold)}
+
+/* Header */
 .brand{text-align:center;margin-bottom:34px}
 .brand h1{font-family:'Cormorant Garamond',serif;font-weight:700;color:var(--ink);letter-spacing:.06em;line-height:1}
 .brunch .brand h1{font-size:clamp(44px,10vw,76px)}
@@ -47,6 +50,7 @@ body.dinner .sheet{border-color:var(--line);}
 .dinner .brand .script span{display:block;font-family:'Cormorant Garamond',serif;font-weight:700;font-size:.52em;color:var(--ink);letter-spacing:.04em;margin-top:-4px}
 .hours{margin-top:14px;font-size:12px;letter-spacing:.2em;color:var(--muted);text-transform:uppercase}
 
+/* Items */
 .item{
   display:grid;grid-template-columns:1fr auto;gap:8px 18px;padding:24px 0;border-top:1px solid var(--line);
   align-items:start;
@@ -74,12 +78,27 @@ body.dinner .sheet{border-color:var(--line);}
 .footer{text-align:center;margin-top:26px;padding-top:6px;color:var(--gold);font-size:11px;letter-spacing:.34em;text-transform:uppercase;font-weight:400}
 .dinner .footer{font-family:'Pinyon Script',cursive;text-transform:none;letter-spacing:.04em;font-size:30px}
 
+/* Drinks */
+.drinks{margin-top:18px;padding-top:34px;border-top:1px solid var(--gold)}
+.drinks > h2{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:clamp(34px,8vw,52px);color:var(--ink);text-align:center;letter-spacing:.06em}
+.drinks > .orn{display:flex;align-items:center;justify-content:center;gap:14px;margin:10px 0 6px;color:var(--gold)}
+.drinks > .orn::before,.drinks > .orn::after{content:"";height:1px;width:60px;background:var(--gold)}
+.dgroup{margin-top:26px}
+.dgroup h3{font:500 13px 'Jost',sans-serif;letter-spacing:.34em;text-transform:uppercase;color:var(--gold);padding-bottom:10px;border-bottom:1px solid var(--line)}
+.drow{display:grid;grid-template-columns:1fr auto;gap:2px 16px;padding:14px 0;border-bottom:1px dashed var(--line);align-items:baseline}
+.drow:last-child{border-bottom:0}
+.drow .dn{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:clamp(20px,4.4vw,25px);color:var(--ink);line-height:1.15}
+.drow .dd{grid-column:1;font-size:14px;color:var(--muted);line-height:1.4}
+.drow .dp{grid-column:2;grid-row:1 / span 2;font-family:'Cormorant Garamond',serif;font-weight:700;font-size:clamp(20px,4.2vw,26px);color:var(--gold);white-space:nowrap;align-self:center}
+
+/* Closed */
 .closed{text-align:center;padding:60px 10px 50px}
 .closed h2{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,7vw,48px);color:var(--ink);font-weight:700}
 .closed p{margin-top:14px;font-size:16px;line-height:1.6;color:var(--muted)}
 .closed .times{margin-top:26px;display:inline-block;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:14px 26px;
   color:var(--gold);letter-spacing:.18em;font-size:13px;text-transform:uppercase;line-height:2}
 
+/* Modal */
 .modal{position:fixed;inset:0;background:rgba(5,10,8,.82);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;
   padding:18px;z-index:50;opacity:0;transition:opacity .25s}
 .modal.open{display:flex;opacity:1}
@@ -116,10 +135,14 @@ body.dinner .sheet{border-color:var(--line);}
 </div>
 
 <script>
-const IMG_BASE = "https://cdn.example.com/dream-food/";
+/* ============ KONFIGURIM ============ */
+const IMG_BASE = "https://cdn.example.com/dream-food/"; // <-- ndrysho me CDN-in tënd (me / në fund)
 const TIMEZONE = "Europe/Tirane";
 const BRUNCH_FROM = "07:00", DINNER_FROM = "16:00", CLOSE_AT = "23:00";
 const CURRENCY = "L";
+
+/* ============ TË DHËNAT ============ */
+// Emri i pjatës mbetet siç është në shqip; përkthehet vetëm kur ka "name" për gjuhën.
 const MENUS = {
   brunch: [
     { img:"brunch-1.jpg", price:500,
@@ -181,6 +204,42 @@ const MENUS = {
   ]
 };
 
+/* ===== PIJET (shfaqen në të dyja menutë) =====
+   price: vendos numrin (p.sh. 150) – derisa është null, çmimi nuk shfaqet. */
+const L5 = (sq,en,it,fr,de) => ({sq,en,it,fr,de});
+const beer = (brand, price=null) => ({ price,
+  n: L5("Birra "+brand, brand+" Beer", "Birra "+brand, "Bière "+brand, brand+" Bier") });
+
+const DRINKS = {
+  title: L5("Pije","Drinks","Bevande","Boissons","Getränke"),
+  groups: [
+    { title: L5("Pije joalkoolike","Non-Alcoholic","Analcoliche","Sans alcool","Alkoholfrei"),
+      items: [
+        { price:null, n:L5("Ujë Selita me gaz","Selita Sparkling Water","Acqua Selita frizzante","Eau Selita gazeuse","Selita Sprudelwasser"),
+          d:L5("Ujë mineral me gaz, 0.5L","Sparkling mineral water, 0.5L","Acqua minerale frizzante, 0,5L","Eau minérale gazeuse, 0,5 L","Mineralwasser mit Kohlensäure, 0,5 L") },
+        { price:null, n:L5("Ujë Selita pa gaz","Selita Still Water","Acqua Selita naturale","Eau Selita plate","Selita stilles Wasser"),
+          d:L5("Ujë mineral pa gaz, 0.5L","Still mineral water, 0.5L","Acqua minerale naturale, 0,5L","Eau minérale plate, 0,5 L","Stilles Mineralwasser, 0,5 L") },
+        { price:null, n:L5("Bravo Mollë","Bravo Apple","Bravo Mela","Bravo Pomme","Bravo Apfel"),
+          d:L5("Lëng me shije molle","Apple-flavoured juice drink","Bevanda al gusto di mela","Boisson à la pomme","Fruchtsaftgetränk mit Apfelgeschmack") },
+        { price:null, n:L5("Bravo Pjeshkë","Bravo Peach","Bravo Pesca","Bravo Pêche","Bravo Pfirsich"),
+          d:L5("Lëng me shije pjeshke","Peach-flavoured juice drink","Bevanda al gusto di pesca","Boisson à la pêche","Fruchtsaftgetränk mit Pfirsichgeschmack") },
+        { price:null, n:L5("Bravo Luleshtrydhe","Bravo Strawberry","Bravo Fragola","Bravo Fraise","Bravo Erdbeere"),
+          d:L5("Lëng me shije luleshtrydhe","Strawberry-flavoured juice drink","Bevanda al gusto di fragola","Boisson à la fraise","Fruchtsaftgetränk mit Erdbeergeschmack") },
+        { price:null, n:L5("Cola","Cola","Cola","Cola","Cola") },
+        { price:null, n:L5("San Benedetto Pjeshkë","San Benedetto Peach","San Benedetto Pesca","San Benedetto Pêche","San Benedetto Pfirsich"),
+          d:L5("Çaj i ftohtë me pjeshkë","Peach iced tea","Tè freddo alla pesca","Thé glacé à la pêche","Pfirsich-Eistee") },
+        { price:null, n:L5("Golden Eagle","Golden Eagle","Golden Eagle","Golden Eagle","Golden Eagle"),
+          d:L5("Pije energjike","Energy drink","Bevanda energetica","Boisson énergisante","Energydrink") },
+        { price:null, n:L5("Lemon + Oran Soda","Lemon + Orange Soda","Lemon + Orange Soda","Lemon + Orange Soda","Lemon + Orange Soda"),
+          d:L5("Sodë me limon dhe portokall","Soda with lemon and orange","Bibita gassata al limone e arancia","Soda au citron et à l'orange","Limonade mit Zitrone und Orange") },
+        { price:null, n:L5("Fanta Ekzotike","Fanta Exotic","Fanta Exotic","Fanta Exotic","Fanta Exotic") },
+        { price:null, n:L5("Fanta Portokalli","Fanta Orange","Fanta Arancia","Fanta Orange","Fanta Orange") }
+      ] },
+    { title: L5("Birra","Beer","Birra","Bières","Bier"),
+      items: [ beer("Heineken"), beer("Peroni"), beer("Castello Lager"), beer("Korça") ] }
+  ]
+};
+
 const UI = {
   sq:{brunchSub:"Brunch Stories", dinnerTitle:"Menuja e Darkës", brunchHours:"Çdo ditë · 07:00 – 16:00", dinnerHours:"Çdo ditë · 16:00 – 23:00",
       closedTitle:"Aktualisht jemi të mbyllur", closedText:"Ju presim nesër me ushqim të freskët dhe humor të mirë.",
@@ -205,6 +264,7 @@ const UI = {
 };
 const LANGS = [["sq","SQ"],["en","EN"],["it","IT"],["fr","FR"],["de","DE"]];
 
+/* ============ LOGJIKA ============ */
 const $ = id => document.getElementById(id);
 const toMin = s => { const [h,m] = s.split(":").map(Number); return h*60+m; };
 let lang = "sq";
@@ -217,6 +277,7 @@ function nowMinutes(){
   return h*60+m;
 }
 function activeMenu(){
+  // Test: ?preview=brunch | dinner | closed
   const pv = new URLSearchParams(location.search).get("preview");
   if (["brunch","dinner","closed"].includes(pv)) return pv;
   const t = nowMinutes();
@@ -264,7 +325,9 @@ function renderMenu(){
       </button>
     </article>`;
   }).join("");
+  $("menu").insertAdjacentHTML("beforeend", renderDrinks());
   $("footer").textContent = kind === "dinner" ? u.footerDinner : u.footerBrunch;
+  // fallback kur foto nuk ngarkohet
   document.querySelectorAll(".thumb img").forEach(img => {
     const fail = () => img.parentElement.classList.add("noimg");
     img.addEventListener("error", fail);
@@ -272,6 +335,20 @@ function renderMenu(){
   });
 }
 
+function renderDrinks(){
+  const g = o => o[lang] || o.sq;
+  const groups = DRINKS.groups.map(gr => `
+    <section class="dgroup"><h3>${esc(g(gr.title))}</h3>
+      ${gr.items.map(it => `<div class="drow">
+        <div class="dn">${esc(g(it.n))}</div>
+        ${it.d ? `<div class="dd">${esc(g(it.d))}</div>` : ""}
+        ${it.price != null ? `<div class="dp">${it.price} ${CURRENCY}</div>` : ""}
+      </div>`).join("")}
+    </section>`).join("");
+  return `<section class="drinks"><h2>${esc(g(DRINKS.title))}</h2><div class="orn">✦</div>${groups}</section>`;
+}
+
+/* Modal */
 function openModal(i){
   const it = MENUS[current][i], t = it[lang] || it.sq, u = UI[lang];
   $("dialog").innerHTML = `
@@ -298,6 +375,7 @@ document.addEventListener("click", e => {
 });
 document.addEventListener("keydown", e => { if (e.key === "Escape") closeModal(); });
 
+// ndërro automatikisht menunë kur vjen ora
 setInterval(() => { if (activeMenu() !== current && !$("modal").classList.contains("open")) renderMenu(); }, 30000);
 
 renderLangs(); renderMenu();
